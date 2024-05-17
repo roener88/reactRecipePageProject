@@ -22,7 +22,13 @@ export const RecipePage = ({ recipe, clickFn }) => {
     mealType,
     dishType,
     healthLabels,
+    ingredientLines,
+    totalTime,
+    yield: servings,
+    totalNutrients,
   } = recipe;
+
+  const { ENERC_KCAL, FAT, PROCNT, NA, CHOLE, CHOCDF } = totalNutrients;
 
   const dietLabelComponents = dietLabels.map(
     (dietLabel, index) => dietLabel && <Tag key={index}>{dietLabel}</Tag>
@@ -36,6 +42,10 @@ export const RecipePage = ({ recipe, clickFn }) => {
     (healthLabel, index) => healthLabel && <Tag key={index}>{healthLabel}</Tag>
   );
 
+  const ingredientList = ingredientLines.map((ingredient, index) => (
+    <Tag key={index}>{ingredient}</Tag>
+  ));
+
   return (
     <Container maxW='container.xl' mx='auto' py={20}>
       <VStack>
@@ -46,9 +56,9 @@ export const RecipePage = ({ recipe, clickFn }) => {
             <Image src={image} borderRadius={10} />
           </AspectRatio>
           <Heading size='lg'>{label}</Heading>
-          <Heading size='md'>Meal Type:</Heading>
+          <Heading size='md'>Meal:</Heading>
           <Text>{mealType}</Text>
-          <Heading size='md'>Dish Type:</Heading>
+          <Heading size='md'>Dish:</Heading>
           <Text>{dishType}</Text>
           {dietLabels.length > 0 && <Heading size='md'>Diet Labels:</Heading>}
           {dietLabelComponents}
@@ -56,6 +66,29 @@ export const RecipePage = ({ recipe, clickFn }) => {
           {cautionLabelComponents}
           {healthLabels && <Heading size='md'>Health Labels:</Heading>}
           {heatlhLabelComponents}
+          <Heading size='md'>Ingredients:</Heading>
+          {ingredientList}
+          <Heading size='md'>Total cooking time: {totalTime}</Heading>
+          <Heading size='md'>Servings: {servings}</Heading>
+          <Heading size='md'>Total Nutriens:</Heading>
+          <Text>
+            {ENERC_KCAL.label}: {ENERC_KCAL.quantity}
+          </Text>
+          <Text>
+            {PROCNT.label}: {PROCNT.quantity}
+          </Text>
+          <Text>
+            {FAT.label}: {FAT.quantity}
+          </Text>
+          <Text>
+            {CHOCDF.label}: {CHOCDF.quantity}
+          </Text>
+          <Text>
+            {CHOLE.label}: {CHOLE.quantity}
+          </Text>
+          <Text>
+            {NA.label}: {NA.quantity}
+          </Text>
         </Stack>
       </VStack>
     </Container>
