@@ -8,10 +8,8 @@ import {
   Image,
   Text,
   Tag,
+  Button,
 } from "@chakra-ui/react";
-
-//Components
-import { Header } from "../components/ui/Header";
 
 export const RecipePage = ({ recipe, clickFn }) => {
   const {
@@ -49,13 +47,18 @@ export const RecipePage = ({ recipe, clickFn }) => {
   return (
     <Container maxW='container.xl' mx='auto' py={20}>
       <VStack>
-        <Header selectedRecipe={recipe} clickFn={clickFn} py={20} />
+        <Heading py='10' size='4xl' textAlign='center'>
+          {label}
+        </Heading>
+
+        <Button my={10} onClick={() => clickFn()}>
+          Back to overview
+        </Button>
 
         <Stack>
           <AspectRatio maxW='full' ratio={16 / 9}>
             <Image src={image} borderRadius={10} />
           </AspectRatio>
-          <Heading size='lg'>{label}</Heading>
           <Heading size='md'>Meal:</Heading>
           <Text>{mealType}</Text>
           <Heading size='md'>Dish:</Heading>
@@ -72,22 +75,22 @@ export const RecipePage = ({ recipe, clickFn }) => {
           <Heading size='md'>Servings: {servings}</Heading>
           <Heading size='md'>Total Nutriens:</Heading>
           <Text>
-            {ENERC_KCAL.label}: {ENERC_KCAL.quantity}
+            {ENERC_KCAL.label}: {Math.round(ENERC_KCAL.quantity)}
           </Text>
           <Text>
-            {PROCNT.label}: {PROCNT.quantity}
+            {PROCNT.label}: {Math.round(PROCNT.quantity)}
           </Text>
           <Text>
-            {FAT.label}: {FAT.quantity}
+            {FAT.label}: {Math.round(FAT.quantity)}
           </Text>
           <Text>
-            {CHOCDF.label}: {CHOCDF.quantity}
+            {CHOCDF.label}: {Math.round(CHOCDF.quantity)}
           </Text>
           <Text>
-            {CHOLE.label}: {CHOLE.quantity}
+            {CHOLE.label}: {Math.round(CHOLE.quantity)}
           </Text>
           <Text>
-            {NA.label}: {NA.quantity}
+            {NA.label}: {Math.round(NA.quantity)}
           </Text>
         </Stack>
       </VStack>
