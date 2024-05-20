@@ -27,7 +27,7 @@ export const RecipeListPage = ({ recipes, clickFn }) => {
     <>
       <Container maxW='container.xl' mx='auto' py={20}>
         <VStack>
-          <Heading py='10' size='4xl'>
+          <Heading py='10' size='4xl' color='green.900'>
             Recipe List Page
           </Heading>
 

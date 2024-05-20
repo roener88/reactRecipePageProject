@@ -55,7 +55,7 @@ export const RecipePage = ({ recipe, clickFn }) => {
           Back to overview
         </Button>
 
-        <Stack>
+        <Stack w='container.lg'>
           <AspectRatio maxW='full' ratio={16 / 9}>
             <Image src={image} borderRadius={10} />
           </AspectRatio>
