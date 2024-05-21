@@ -1,5 +1,5 @@
 // Chakra UI
-import { Divider, Text, Flex } from "@chakra-ui/react";
+import { Text, Flex } from "@chakra-ui/react";
 
 // Components
 import { Tag } from "./Tag";
@@ -14,8 +14,7 @@ export const LabelList = ({ labels, title, color }) => {
 
   return (
     <>
-      <Divider borderColor={colors[1]} />
-      <Text fontWeight='semibold' color={colors[1]}>
+      <Text fontWeight='semibold' color={colors[1]} pb={2}>
         {title}
       </Text>
       <Flex flexWrap='wrap' flexDirection='row' gap={2}>

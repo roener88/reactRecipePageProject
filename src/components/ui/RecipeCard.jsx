@@ -49,21 +49,31 @@ export const RecipeCard = ({ recipe, clickFn }) => {
             {dishType}
           </Heading>
           {dietLabels.length > 0 && (
-            <LabelList
-              labels={dietLabels}
-              title='Diet Labels:'
-              color='blue.200'
-            />
+            <>
+              <Divider borderColor={colors[1]} />
+              <LabelList
+                labels={dietLabels}
+                title='Diet Labels:'
+                color='blue.200'
+              />
+            </>
           )}
+
           {cautions.length > 0 && (
-            <LabelList labels={cautions} title='Cautions:' color='red.200' />
+            <>
+              <Divider borderColor={colors[1]} />
+              <LabelList labels={cautions} title='Cautions:' color='red.200' />
+            </>
           )}
           {matchedHealthLabels.length > 0 && (
-            <LabelList
-              labels={matchedHealthLabels}
-              title='Health Labels:'
-              color='green.200'
-            />
+            <>
+              <Divider borderColor={colors[1]} />
+              <LabelList
+                labels={matchedHealthLabels}
+                title='Health Labels:'
+                color='green.200'
+              />
+            </>
           )}
         </Stack>
       </Card>

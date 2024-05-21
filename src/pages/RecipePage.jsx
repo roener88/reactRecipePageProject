@@ -6,13 +6,17 @@ import {
   Heading,
   AspectRatio,
   Image,
-  Text,
-  Tag,
   Button,
+  Text,
+  HStack,
+  Flex,
+  Divider,
+  Box,
 } from "@chakra-ui/react";
 
 // Components
 import { LabelList } from "../components/ui/LabelList.jsx";
+import { InfoList } from "../components/ui/InfoList.jsx";
 
 // Utils
 import { colors } from "../utils/colors.js";
@@ -32,84 +36,102 @@ export const RecipePage = ({ recipe, clickFn }) => {
     totalNutrients,
   } = recipe;
 
+  // Get the right nutrient objects
   const { ENERC_KCAL, FAT, PROCNT, NA, CHOLE, CHOCDF } = totalNutrients;
 
-  const ingredientList = ingredientLines.map((ingredient, index) => (
-    <Tag key={index}>{ingredient}</Tag>
-  ));
+  // Store the nutrient objects in an Array
+  const nutrients = [ENERC_KCAL, FAT, PROCNT, NA, CHOLE, CHOCDF];
+
+  // Convert the nutrient objects in a workable string
+  const nutrientInfo = nutrients.map((nutrient) => {
+    return `${nutrient.label}: ${Math.round(nutrient.quantity)}`;
+  });
 
   return (
     <Container maxW='container.xl' mx='auto' py={20}>
       <VStack>
-        <Heading py='10' size='4xl' textAlign='center' color={colors[0]}>
-          {label}
-        </Heading>
+        <VStack py={10}>
+          <Heading
+            maxW='20ch'
+            paddingBottom={10}
+            size='4xl'
+            textAlign='left'
+            color={colors[0]}
+          >
+            {label}
+          </Heading>
 
-        <Button my={10} onClick={() => clickFn()}>
-          Back to overview
-        </Button>
+          <Button onClick={() => clickFn()}>Back to overview</Button>
+        </VStack>
 
         <Stack w='container.lg'>
-          <AspectRatio maxW='full' ratio={16 / 9}>
+          <AspectRatio maxW='full' ratio={16 / 9} mb={6}>
             <Image src={image} borderRadius={10} />
           </AspectRatio>
 
-          <Heading size='lg' color={colors[1]}>
-            {mealType}
-          </Heading>
-          <Heading size='lg' color={colors[1]}>
-            {dishType}
-          </Heading>
+          <Flex flexDirection='row'>
+            <Stack w='30%' paddingRight={10}>
+              <Heading size='lg' color={colors[1]}>
+                Total cooking time: {totalTime}
+              </Heading>
+              <Heading size='md' color={colors[1]}>
+                Servings: {servings}
+              </Heading>
+              <Divider borderColor={colors[1]} />
+              <HStack>
+                <Text fontWeight='bold' color={colors[1]}>
+                  {mealType}
+                </Text>
+                <Text fontWeight='bold' color={colors[1]}>
+                  {dishType}
+                </Text>
+              </HStack>
+            </Stack>
 
-          {cautions.length > 0 && (
-            <LabelList labels={cautions} title='Cautions:' color='red.200' />
-          )}
+            <Stack w='70%' p={10} bg={colors[3]} borderRadius={10}>
+              <Box pb={5}>
+                <InfoList
+                  listHeader='Ingredients:'
+                  listItems={ingredientLines}
+                />
+              </Box>
+              <Box pb={5}>
+                <InfoList
+                  listHeader='Total Nutriens:'
+                  listItems={nutrientInfo}
+                />
+              </Box>
+              {cautions.length > 0 && (
+                <Box pb={5}>
+                  <LabelList
+                    labels={cautions}
+                    title='Cautions:'
+                    color='red.200'
+                  />
+                </Box>
+              )}
 
-          <Heading size='lg' color={colors[1]}>
-            Total cooking time: {totalTime}
-          </Heading>
-          <Heading size='lg' color={colors[1]}>
-            Servings: {servings}
-          </Heading>
+              {dietLabels.length > 0 && (
+                <Box pb={5}>
+                  <LabelList
+                    labels={dietLabels}
+                    title='Diet Labels:'
+                    color='blue.200'
+                  />
+                </Box>
+              )}
 
-          <Heading size='md'>Ingredients:</Heading>
-          {ingredientList}
-
-          {dietLabels.length > 0 && (
-            <LabelList
-              labels={dietLabels}
-              title='Diet Labels:'
-              color='blue.200'
-            />
-          )}
-
-          {healthLabels.length > 0 && (
-            <LabelList
-              labels={healthLabels}
-              title='Health Labels:'
-              color='green.200'
-            />
-          )}
-
-          <Heading size='md'>Total Nutriens:</Heading>
-          <Text>
-            {ENERC_KCAL.label}: {Math.round(ENERC_KCAL.quantity)}
-          </Text>
-          <Text>
-            {PROCNT.label}: {Math.round(PROCNT.quantity)}
-          </Text>
-          <Text>
-            {FAT.label}: {Math.round(FAT.quantity)}
-          </Text>
-          <Text>
-            {CHOCDF.label}: {Math.round(CHOCDF.quantity)}
-          </Text>
-          <Text>
-            {CHOLE.label}: {Math.round(CHOLE.quantity)}
-          </Text>
-          <Text>
-            {NA.label}: {Math.round(NA.quantity)}
-          </Text>
+              {healthLabels.length > 0 && (
+                <Box maxW='70%'>
+                  <LabelList
+                    labels={healthLabels}
+                    title='Health Labels:'
+                    color='green.200'
+                  />
+                </Box>
+              )}
+            </Stack>
+          </Flex>
         </Stack>
       </VStack>
     </Container>
