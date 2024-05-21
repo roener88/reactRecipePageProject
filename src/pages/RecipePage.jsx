@@ -64,13 +64,24 @@ export const RecipePage = ({ recipe, clickFn }) => {
           <Button onClick={() => clickFn()}>Back to overview</Button>
         </VStack>
 
-        <Stack w='container.lg'>
-          <AspectRatio maxW='full' ratio={16 / 9} mb={6}>
+        <Stack
+          w={{
+            base: "100%",
+            sm: "container.sm",
+            md: "container.md",
+            lg: "container.lg",
+          }}
+        >
+          <AspectRatio w='100%' ratio={16 / 9} mb={6}>
             <Image src={image} borderRadius={10} />
           </AspectRatio>
 
-          <Flex flexDirection='row'>
-            <Stack w='30%' paddingRight={10}>
+          <Flex flexDirection={{ base: "column", lg: "row" }}>
+            <Stack
+              w={{ base: "100%", lg: "30%" }}
+              paddingRight={{ base: "0", lg: "10" }}
+              paddingBottom={10}
+            >
               <Heading size='lg' color={colors[1]}>
                 Total cooking time: {totalTime}
               </Heading>
@@ -88,7 +99,12 @@ export const RecipePage = ({ recipe, clickFn }) => {
               </HStack>
             </Stack>
 
-            <Stack w='70%' p={10} bg={colors[3]} borderRadius={10}>
+            <Stack
+              w={{ base: "100%", lg: "70%" }}
+              p={10}
+              bg={colors[3]}
+              borderRadius={10}
+            >
               <Box pb={5}>
                 <InfoList
                   listHeader='Ingredients:'

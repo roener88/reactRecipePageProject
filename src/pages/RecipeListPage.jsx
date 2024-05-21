@@ -49,9 +49,10 @@ export const RecipeListPage = ({ recipes, clickFn }) => {
 
           <Flex
             flexWrap='wrap'
-            // justifyContent='space-between'
-            gap='5 '
-            w='100%'
+            flexDirection={{ base: "column", lg: "row" }}
+            justifyContent='center'
+            gap='5'
+            // w='100%'
             py='10'
           >
             {recipeItems}
