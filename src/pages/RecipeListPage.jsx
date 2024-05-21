@@ -15,7 +15,7 @@ export const RecipeListPage = ({ recipes, clickFn }) => {
   const [searchField, setSearchField] = useState("");
 
   const matchedRecipes = recipes.filter(({ recipe }) => {
-    if (recipe.label.toLowerCase().includes(searchField.toLocaleLowerCase())) {
+    if (recipe.label.toLowerCase().includes(searchField.toLowerCase())) {
       return recipe;
     }
   });
@@ -48,6 +48,7 @@ export const RecipeListPage = ({ recipes, clickFn }) => {
           />
 
           <Flex
+            w={{ base: "100%" }}
             flexWrap='wrap'
             flexDirection={{ base: "column", lg: "row" }}
             justifyContent='center'
