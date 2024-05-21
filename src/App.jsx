@@ -17,7 +17,7 @@ export const App = () => {
   // Your state code here
   return (
     <>
-      <Box bg='green.50'>
+      <Box bg='#E8DFCA'>
         {selectedRecipe ? (
           <RecipePage recipe={selectedRecipe} clickFn={setSelectedRecipe} />
         ) : (

@@ -11,6 +11,12 @@ import {
   Button,
 } from "@chakra-ui/react";
 
+// Components
+import { LabelList } from "../components/ui/LabelList.jsx";
+
+// Utils
+import { colors } from "../utils/colors.js";
+
 export const RecipePage = ({ recipe, clickFn }) => {
   const {
     label,
@@ -28,18 +34,6 @@ export const RecipePage = ({ recipe, clickFn }) => {
 
   const { ENERC_KCAL, FAT, PROCNT, NA, CHOLE, CHOCDF } = totalNutrients;
 
-  const dietLabelComponents = dietLabels.map(
-    (dietLabel, index) => dietLabel && <Tag key={index}>{dietLabel}</Tag>
-  );
-
-  const cautionLabelComponents = cautions.map(
-    (cautions, index) => cautions && <Tag key={index}>{cautions}</Tag>
-  );
-
-  const heatlhLabelComponents = healthLabels.map(
-    (healthLabel, index) => healthLabel && <Tag key={index}>{healthLabel}</Tag>
-  );
-
   const ingredientList = ingredientLines.map((ingredient, index) => (
     <Tag key={index}>{ingredient}</Tag>
   ));
@@ -47,7 +41,7 @@ export const RecipePage = ({ recipe, clickFn }) => {
   return (
     <Container maxW='container.xl' mx='auto' py={20}>
       <VStack>
-        <Heading py='10' size='4xl' textAlign='center'>
+        <Heading py='10' size='4xl' textAlign='center' color={colors[0]}>
           {label}
         </Heading>
 
@@ -59,20 +53,44 @@ export const RecipePage = ({ recipe, clickFn }) => {
           <AspectRatio maxW='full' ratio={16 / 9}>
             <Image src={image} borderRadius={10} />
           </AspectRatio>
-          <Heading size='md'>Meal:</Heading>
-          <Text>{mealType}</Text>
-          <Heading size='md'>Dish:</Heading>
-          <Text>{dishType}</Text>
-          {dietLabels.length > 0 && <Heading size='md'>Diet Labels:</Heading>}
-          {dietLabelComponents}
-          {cautions.length > 0 && <Heading size='md'>Caution Labels:</Heading>}
-          {cautionLabelComponents}
-          {healthLabels && <Heading size='md'>Health Labels:</Heading>}
-          {heatlhLabelComponents}
+
+          <Heading size='lg' color={colors[1]}>
+            {mealType}
+          </Heading>
+          <Heading size='lg' color={colors[1]}>
+            {dishType}
+          </Heading>
+
+          {cautions.length > 0 && (
+            <LabelList labels={cautions} title='Cautions:' color='red.200' />
+          )}
+
+          <Heading size='lg' color={colors[1]}>
+            Total cooking time: {totalTime}
+          </Heading>
+          <Heading size='lg' color={colors[1]}>
+            Servings: {servings}
+          </Heading>
+
           <Heading size='md'>Ingredients:</Heading>
           {ingredientList}
-          <Heading size='md'>Total cooking time: {totalTime}</Heading>
-          <Heading size='md'>Servings: {servings}</Heading>
+
+          {dietLabels.length > 0 && (
+            <LabelList
+              labels={dietLabels}
+              title='Diet Labels:'
+              color='blue.200'
+            />
+          )}
+
+          {healthLabels.length > 0 && (
+            <LabelList
+              labels={healthLabels}
+              title='Health Labels:'
+              color='green.200'
+            />
+          )}
+
           <Heading size='md'>Total Nutriens:</Heading>
           <Text>
             {ENERC_KCAL.label}: {Math.round(ENERC_KCAL.quantity)}

@@ -4,14 +4,14 @@ import {
   AspectRatio,
   Image,
   Heading,
-  Text,
   Divider,
-  Flex,
-  background,
 } from "@chakra-ui/react";
 
 // Components
-import { Tag } from "./Tag";
+import { LabelList } from "./LabelList";
+
+// Utils
+import { colors } from "../../utils/colors.js";
 
 export const RecipeCard = ({ recipe, clickFn }) => {
   const {
@@ -24,74 +24,46 @@ export const RecipeCard = ({ recipe, clickFn }) => {
     healthLabels,
   } = recipe;
 
-  const dietLabelComponents = dietLabels.map(
-    (dietLabel, index) =>
-      dietLabel && <Tag key={index} text={dietLabel} color='blue.200' />
-  );
-
-  const cautionLabelComponents = cautions.map(
-    (cautions, index) =>
-      cautions && <Tag key={index} text={cautions} color='red.200' />
-  );
-
-  const heatlhLabelComponents = healthLabels.map(
-    (healthLabel, index) =>
-      (healthLabel.includes("Vegan") || healthLabel.includes("Vegetarian")) && (
-        <Tag key={index} text={healthLabel} color='green.200' />
-      )
-  );
+  const matchedHealthLabels = healthLabels.filter((healthLabel) => {
+    if (healthLabel.includes("Vegan") || healthLabel.includes("Vegetarian")) {
+      return healthLabel;
+    }
+  });
 
   return (
     <>
-      <Card onClick={() => clickFn(recipe)} w='32%' p='10' bg='white'>
+      <Card onClick={() => clickFn(recipe)} w='32%' p='10' bg='#F5EFE6'>
         <Stack>
           <AspectRatio maxW='full' ratio={4 / 3}>
             <Image src={image} borderRadius={10} />
           </AspectRatio>
-          <Heading size='lg' color='gray.900'>
+          <Heading size='lg' color={colors[0]}>
             {label}
           </Heading>
-          <Divider />
-          <Heading size='md' color='green.800'>
+          <Divider borderColor={colors[1]} />
+          <Heading size='md' color={colors[1]}>
             {mealType}
           </Heading>
-          <Divider />
-          <Heading size='md' color='green.800'>
+          <Divider borderColor={colors[1]} />
+          <Heading size='md' color={colors[1]}>
             {dishType}
           </Heading>
           {dietLabels.length > 0 && (
-            <>
-              <Divider />
-              <Text fontWeight='bold' color='gray.500'>
-                Diet Labels:
-              </Text>
-              <Flex flexWrap='wrap' flexDirection='row' gap={2}>
-                {dietLabelComponents}
-              </Flex>
-            </>
+            <LabelList
+              labels={dietLabels}
+              title='Diet Labels:'
+              color='blue.200'
+            />
           )}
           {cautions.length > 0 && (
-            <>
-              <Divider />
-              <Text fontWeight='bold' color='gray.500'>
-                Caution Labels:
-              </Text>
-              <Flex flexWrap='wrap' flexDirection='row' gap={2}>
-                {cautionLabelComponents}
-              </Flex>
-            </>
+            <LabelList labels={cautions} title='Cautions:' color='red.200' />
           )}
-          {(healthLabels.includes("Vegan") ||
-            healthLabels.includes("Vegetarian")) && (
-            <>
-              <Divider />
-              <Text fontWeight='bold' color='gray.500'>
-                Health Labels:
-              </Text>
-              <Flex flexWrap='wrap' flexDirection='row' gap={2}>
-                {heatlhLabelComponents}
-              </Flex>
-            </>
+          {matchedHealthLabels.length > 0 && (
+            <LabelList
+              labels={matchedHealthLabels}
+              title='Health Labels:'
+              color='green.200'
+            />
           )}
         </Stack>
       </Card>
